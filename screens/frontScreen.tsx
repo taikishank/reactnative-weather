@@ -10,24 +10,26 @@ import { ForecastParams, LocationParams } from "../shared/interfaces";
 
 export default function FrontScreen(){
   const [cityName, setCityName] = useState<string>("");
-    return(
-        <View style={styles.container}>
-            <View style={styles.horizontalLine}></View>
-            <Text style={styles.title}>Weather</Text>
-            <View style={styles.search_bar}>
-              <SearchBar onSearch={setCityName}/>
-            </View>
-            <View style={styles.horizontalLine}></View>
-            <Image 
-                source = {require("../assets/cloud_sun.png")}
-                style = {styles.image}
-            />
-            <TemperatureDisplay cityName={cityName}/>
-            <View style={styles.horizontalLine}></View>
-            <CityDisplay cityName={cityName}/>
-            <View style={styles.horizontalLine}></View>
-        </View>
-    );
+  const [icon, setIcon] = useState<string | null>(null);
+  const [condition, setCondition] = useState<string | null>(null);
+
+  return(
+      <View style={styles.container}>
+          <View style={styles.horizontalLine}></View>
+          <Text style={styles.title}>Weather</Text>
+          <View style={styles.search_bar}>
+            <SearchBar onSearch={setCityName}/>
+          </View>
+          <View style={styles.horizontalLine}></View>
+          <Image 
+              source = {icon ? {uri:icon} : require("../assets/cloud_sun.png")}style={styles.image}
+          />
+          <TemperatureDisplay cityName={cityName} setIcon={setIcon} setCondition={setCondition}/>
+          <View style={styles.horizontalLine}></View>
+          <CityDisplay cityName={cityName}/>
+          <View style={styles.horizontalLine}></View>
+      </View>
+  );
 }
 
 const styles = StyleSheet.create({
